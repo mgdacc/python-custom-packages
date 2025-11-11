@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Interactiva: Paquetes Custom en Python</title>
+    <style>
+        /* === ESTILOS GLOBALES Y DE ESCRITORIO === */
+        body {
+            font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0;
+            padding: 40px; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; box-sizing: border-box; transition: padding 0.3s ease;
+        }
+
+        .slideshow-container { position: relative; width: 90%; max-width: 960px; }
+        
+        .slide {
+            display: none; background-color: #fff; border: 1px solid #ccc;
+            height: 540px; padding: 40px 60px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            flex-direction: column; justify-content: center; position: relative;
+            box-sizing: border-box;
+        }
+
+        .fade { animation-name: fade; animation-duration: 0.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 50px; height: 50px; background-color: #cccccc; color: #333;
+            border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 24px; transition: all 0.3s ease;
+            user-select: none; z-index: 10;
+        }
+
+        .prev { left: -70px; }
+        .next { right: -70px; }
+        .prev:hover, .next:hover { background-color: #aaaaaa; }
+
+        .slide h1 { font-size: 3.5em; text-align: center; border-bottom: 4px solid #11a800; padding-bottom: 20px; color: #005A9C; }
+        .slide h2 { font-size: 2.8em; margin-top: 0; margin-bottom: 30px; text-align: center; color: #005A9C; }
+        .single-content { text-align: center; }
+        .single-content p { font-size: 1.5em; color: #444; }
+        .single-content pre { font-size: 1.2em; display: inline-block; text-align: left; max-width: 100%; }
+        pre { background-color: #2d3636; color: #fff; padding: 15px; border-radius: 5px; font-size: 1.1em; white-space: pre-wrap; }
+        .footer { position: absolute; bottom: 20px; right: 40px; font-size: 1em; color: #888; }
+
+        /* === MEDIA QUERIES === */
+        @media screen and (max-width: 768px) {
+            body { padding: 15px; }
+            .slideshow-container { width: 100%; padding-bottom: 75px; }
+            .slide { height: auto; min-height: 75vh; padding: 20px 25px; }
+            .prev, .next { top: auto; bottom: 15px; width: 45px; height: 45px; }
+            .prev { left: 50%; transform: translateX(-110%); }
+            .next { left: 50%; transform: translateX(10%); right: auto; }
+            .slide h1 { font-size: 2.2em; }
+            .slide h2 { font-size: 1.8em; }
+            .single-content p { font-size: 1.1em; }
+            .single-content pre { font-size: 1em; }
+            .footer { font-size: 0.8em; right: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        
+        <div class="slide fade">
+            <h1>Cheat Sheet de Python</h1>
+            <h2 style="color:#333; border:none;">Custom Packages</h2>
+            <div class="footer">1 / 17</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Recap: ¿Qué es un Módulo?</h2>
+            <div class="single-content"><p>Un simple archivo de Python (<code>.py</code>) que contiene código reutilizable (funciones, clases, etc.).</p></div>
+            <div class="footer">2 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>¿Qué pasa si mi proyecto crece?</h2>
+            <div class="single-content"><p>Tener todo en un solo archivo o en muchos archivos sueltos se vuelve caótico. Necesitamos una forma de agrupar módulos relacionados.</p></div>
+            <div class="footer">3 / 17</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>¿Qué es un Paquete (Package)?</h2>
+            <div class="single-content"><p>En Python, un paquete es simplemente una <strong>carpeta</strong> que contiene módulos y un archivo especial llamado <code>__init__.py</code>.</p></div>
+            <div class="footer">4 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>El Archivo <code>__init__.py</code></h2>
+            <div class="single-content"><p>Este archivo le dice a Python: "Esta carpeta no es una carpeta cualquiera, trátala como un paquete". Puede estar vacío, y a menudo lo está.</p></div>
+            <div class="footer">5 / 17</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Ejemplo: Estructura de un Paquete</h2>
+            <div class="single-content"><p>Imaginemos un paquete para utilidades.</p><pre><code>mi_proyecto/
+|-- main.py
+|-- mi_paquete/
+    |-- __init__.py      # Le dice a Python que 'mi_paquete' es un paquete
+    |-- matematicas.py
+    |-- saludos.py</code></pre></div>
+            <div class="footer">6 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Contenido de <code>matematicas.py</code></h2>
+            <div class="single-content"><pre><code># mi_paquete/matematicas.py
+def sumar(a, b):
+    return a + b
+
+def restar(a, b):
+    return a - b</code></pre></div>
+            <div class="footer">7 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Contenido de <code>saludos.py</code></h2>
+            <div class="single-content"><pre><code># mi_paquete/saludos.py
+def hola(nombre):
+    return f"Hola, {nombre}"
+
+def adios(nombre):
+    return f"Adiós, {nombre}"</code></pre></div>
+            <div class="footer">8 / 17</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Usar el Paquete: Importación Absoluta</h2>
+            <div class="single-content"><p>Desde `main.py`, usamos la notación de punto para acceder a los módulos dentro del paquete.</p><pre><code># main.py
+from mi_paquete import matematicas
+from mi_paquete.saludos import hola
+
+print(matematicas.sumar(5, 3)) # 8
+print(hola("Mundo"))           # Hola, Mundo</code></pre></div>
+            <div class="footer">9 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Subpaquetes</h2>
+            <div class="single-content"><p>Un paquete puede contener otros paquetes (subcarpetas con su propio `__init__.py`). Esto permite organizar aún más el código.</p></div>
+            <div class="footer">10 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Estructura con Subpaquetes</h2>
+            <div class="single-content"><pre><code>mi_proyecto/
+|-- main.py
+|-- mi_paquete/
+    |-- __init__.py
+    |-- matematicas.py
+    |-- utilidades/
+        |-- __init__.py # Convierte a 'utilidades' en un subpaquete
+        |-- strings.py</code></pre></div>
+            <div class="footer">11 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Importar desde un Subpaquete</h2>
+            <div class="single-content"><p>La notación de punto se extiende para navegar por la jerarquía.</p><pre><code># main.py
+from mi_paquete.utilidades.strings import a_mayusculas
+
+print(a_mayusculas("hola")) # HOLA</code></pre></div>
+            <div class="footer">12 / 17</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Comunicación Interna: Importaciones Relativas</h2>
+            <div class="single-content"><p>¿Qué pasa si un módulo dentro del paquete necesita usar otro módulo del mismo paquete?</p></div>
+            <div class="footer">13 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejemplo de Importación Relativa</h2>
+            <div class="single-content"><p>Imaginemos que `matematicas.py` necesita una función de `saludos.py`. Se usa un punto (`.`) para indicar "desde el mismo paquete".</p><pre><code># En mi_paquete/matematicas.py
+
+from .saludos import hola # '.' se refiere a 'mi_paquete'
+
+def sumar_y_saludar(a, b, nombre):
+    resultado = a + b
+    saludo = hola(nombre)
+    return f"{saludo}. El resultado es {resultado}."</code></pre></div>
+            <div class="footer">14 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Uso Avanzado de `__init__.py`</h2>
+            <div class="single-content"><p>Puedes usar `__init__.py` para "promover" funciones y hacerlas más accesibles para el usuario de tu paquete.</p></div>
+            <div class="footer">15 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Simplificando Importaciones</h2>
+            <div class="single-content"><p>Al añadir código a `__init__.py`, puedes acortar la ruta de importación.</p><pre><code># En mi_paquete/__init__.py
+from .matematicas import sumar
+from .saludos import hola
+
+# Ahora, en main.py, la importación es más corta:
+from mi_paquete import sumar, hola
+
+print(sumar(1, 2))
+print(hola("Ana"))</code></pre></div>
+            <div class="footer">16 / 17</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Conclusión</h2>
+            <div class="single-content"><p>Los paquetes son la forma estándar de organizar cualquier aplicación de Python que crezca más allá de unos pocos archivos. Permiten crear librerías reutilizables, lógicas y fáciles de mantener.</p></div>
+            <div class="footer">17 / 17</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1 } 
+            if (n < 1) { slideIndex = slides.length }
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            slides[slideIndex - 1].style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>
